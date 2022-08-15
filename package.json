@@ -1,0 +1,33 @@
+{
+  "name": "solana-discovery",
+  "version": "1.0.0",
+  "description": "Solana Discovery",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/florent-uzio/solana-discovery.git"
+  },
+  "keywords": [
+    "Solana",
+    "SOL"
+  ],
+  "author": "Florent Uzio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/florent-uzio/solana-discovery/issues"
+  },
+  "homepage": "https://github.com/florent-uzio/solana-discovery#readme",
+  "devDependencies": {
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@solana/spl-token": "^0.3.0",
+    "@solana/web3.js": "^1.53.0"
+  }
+}

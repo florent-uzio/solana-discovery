@@ -1,0 +1,25 @@
+{
+  "name": "solana-discovery",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@solana-developers/node-helpers": "^1.2.1",
+    "@solana/web3.js": "^1.87.6",
+    "bigint-buffer": "^1.1.5",
+    "dotenv": "^16.3.1",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "prettier": "^3.1.1",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "ts-node": "^10.9.2"
+  }
+}

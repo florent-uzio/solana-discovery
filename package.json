@@ -10,15 +10,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@solana-developers/node-helpers": "^1.2.1",
-    "@solana/web3.js": "^1.87.6",
+    "@solana-developers/helpers": "^1.2.2",
+    "@solana/web3.js": "^1.90.0",
     "bigint-buffer": "^1.1.5",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.4.5",
     "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "@types/node": "^20.10.5",
-    "prettier": "^3.1.1",
+    "@types/node": "^20.11.20",
+    "prettier": "^3.2.5",
     "prettier-plugin-organize-imports": "^3.2.4",
     "ts-node": "^10.9.2"
   }

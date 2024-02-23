@@ -1,35 +1,51 @@
+import { getExplorerLink } from "@solana-developers/helpers"
 import {
+  Cluster,
   Connection,
   Keypair,
   SystemProgram,
-  Transaction,
+  TransactionMessage,
+  TransactionMessageArgs,
   TransferParams,
-  sendAndConfirmTransaction,
+  VersionedTransaction,
 } from "@solana/web3.js"
 
 type SendPaymentProps = {
   transferParams: Omit<TransferParams, "fromPubkey">
   senderKeypair: Keypair
   connection: Connection
+  cluster?: Cluster
 }
 
 export const sendPayment = async ({
   transferParams,
   senderKeypair,
   connection,
+  cluster = "devnet",
 }: SendPaymentProps) => {
-  const transaction = new Transaction()
-
   const sendSolInstruction = SystemProgram.transfer({
     fromPubkey: senderKeypair.publicKey,
     ...transferParams,
   })
 
-  transaction.add(sendSolInstruction)
+  const { blockhash } = await connection.getLatestBlockhash()
 
-  const response = await sendAndConfirmTransaction(connection, transaction, [senderKeypair])
+  const messageArgs: TransactionMessageArgs = {
+    payerKey: senderKeypair.publicKey,
+    recentBlockhash: blockhash,
+    instructions: [sendSolInstruction],
+  }
 
-  console.log(response)
+  const messageV0 = new TransactionMessage(messageArgs).compileToV0Message()
+
+  const versionedTx = new VersionedTransaction(messageV0)
+  versionedTx.sign([senderKeypair])
+
+  const response = await connection.sendTransaction(versionedTx, {
+    preflightCommitment: "confirmed",
+  })
+
+  console.log(getExplorerLink("transaction", response, cluster))
 
   return response
 }

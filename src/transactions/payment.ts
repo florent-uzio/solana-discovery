@@ -4,10 +4,9 @@ import {
   Connection,
   Keypair,
   SystemProgram,
-  TransactionMessage,
-  TransactionMessageArgs,
+  Transaction,
   TransferParams,
-  VersionedTransaction,
+  sendAndConfirmTransaction,
 } from "@solana/web3.js"
 
 type SendPaymentProps = {
@@ -28,24 +27,12 @@ export const sendPayment = async ({
     ...transferParams,
   })
 
-  const { blockhash } = await connection.getLatestBlockhash()
+  const transaction = new Transaction()
+  transaction.add(sendSolInstruction)
 
-  const messageArgs: TransactionMessageArgs = {
-    payerKey: senderKeypair.publicKey,
-    recentBlockhash: blockhash,
-    instructions: [sendSolInstruction],
-  }
+  const signature = await sendAndConfirmTransaction(connection, transaction, [senderKeypair])
 
-  const messageV0 = new TransactionMessage(messageArgs).compileToV0Message()
+  console.log(getExplorerLink("transaction", signature, cluster))
 
-  const versionedTx = new VersionedTransaction(messageV0)
-  versionedTx.sign([senderKeypair])
-
-  const response = await connection.sendTransaction(versionedTx, {
-    preflightCommitment: "confirmed",
-  })
-
-  console.log(getExplorerLink("transaction", response, cluster))
-
-  return response
+  return signature
 }

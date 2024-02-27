@@ -1,7 +1,7 @@
 import { getKeypairFromEnvironment } from "@solana-developers/helpers"
 import { Connection, clusterApiUrl } from "@solana/web3.js"
 import "dotenv/config"
-import { sendPayment } from "./transactions"
+import { ping } from "./transactions/ping"
 
 const main = async () => {
   const keypair = getKeypairFromEnvironment("SECRET_KEY")
@@ -18,14 +18,16 @@ const main = async () => {
   // console.log(`Public Key: ${keypair.publicKey.toBase58()}`)
   // console.log(`Public Key 2: ${keypair2.publicKey.toBase58()}`)
 
-  await sendPayment({
-    transferParams: {
-      toPubkey: keypair2.publicKey,
-      lamports: 1,
-    },
-    connection,
-    senderKeypair: keypair,
-  })
+  // await sendPayment({
+  //   transferParams: {
+  //     toPubkey: keypair2.publicKey,
+  //     lamports: 1,
+  //   },
+  //   connection,
+  //   senderKeypair: keypair,
+  // })
+
+  await ping({ connection, signer: keypair })
 }
 
 main()
